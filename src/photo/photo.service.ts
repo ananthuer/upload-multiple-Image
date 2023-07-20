@@ -31,16 +31,25 @@ export class PhotoService {
 
   async addImage(albumId: number, files: any){
 
+    const imageRegExp = /^image\/(png|jpeg|jpg)$/i;
 
     let album = await Album.findByPk(albumId);
 
 if (!album) return "No album found with this id";
 
 const uploadResults = [];
+const unsupportedFiles = [];
+
+
 
 for (const file of files) {
   const imageId = `ImageId_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
   const targetPath = path.join(__dirname, `albums/${albumId}/${imageId}${path.extname(file.originalname)}`);
+
+  if (!imageRegExp.test(file.mimetype)) {
+    unsupportedFiles.push(file.originalname);
+    continue; // Skip this file and move to the next one
+  }
 
   const photoData = {
     albumId,
@@ -58,7 +67,16 @@ for (const file of files) {
   }
 }
 
-return uploadResults;
+const response = {
+  uploadResults,
+  unsupportedFiles
+};
+
+if (unsupportedFiles.length > 0) {
+  response.unsupportedFiles = unsupportedFiles;
+}
+
+return response;
 
   }
 }

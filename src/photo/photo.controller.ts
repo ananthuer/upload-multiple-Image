@@ -34,7 +34,7 @@ export class PhotoController {
   addImage(@Param('albumId') albumId: number, @UploadedFiles( new ParseFilePipe({
     // validators: [
     //   // new MaxFileSizeValidator({ maxSize: 100000 }),
-    //   new FileTypeValidator({ fileType:  'jpg' }),
+    //   new FileTypeValidator({ fileType: 'jpeg'||'png' || 'jpg' }),
     // ]
   }))  files:Array<Express.Multer.File>){
 

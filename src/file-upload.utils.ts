@@ -19,7 +19,7 @@ export const editFileName = (req, file, callback) => {
   callback(null, `${name.toString().toLowerCase().replaceAll(" ", "_")}-${randomName}${fileExtName}`);
 };
 
-export const imageFileInterceptor = FileInterceptor('file', {
+export const imageFileInterceptor = FileInterceptor('files', {
   storage: diskStorage({
     
     destination: './images',
@@ -28,7 +28,7 @@ export const imageFileInterceptor = FileInterceptor('file', {
   fileFilter: imageFileFilter
 })
 
-export const excelFileInterceptor = FileInterceptor('file', {
+export const excelFileInterceptor = FileInterceptor('files', {
   storage: diskStorage({
     
     destination: './uploads',
